@@ -11,7 +11,7 @@ EMPTY_CHAR=' '
 usage() {
 	echo 'Usage:' "$0" '[-b <batchsize>] [-c <bar char>] [-e <empty char>]'
 	echo "  defaults = -b $BATCHSIZE -c \'$BAR_CHAR\' -e \'$EMPTY_CHAR\'"
-	exit 0
+	exit 9
 }
 
 fatal() {
