@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Copied from ysap : https://github.com/bahamas10/ysap/blob/main/code/2025-08-21-progress-bar/progress-bar
+# To create a sub-folder with a stack of files to test this:
+# > mkdir files
+# > touch files/foo-{0..999}-cache
+
+BATCHSIZE=1
+BAR_CHAR='|'
+EMPTY_CHAR=' '
+LENGTH=50
+
+progress-bar() {
+	local current=$1
+	local total=$2
+
+	local perc_done=$((current * 100 / total))
+	local num_bars=$((perc_done * LENGTH / 100))
+	local i
+	local s='['
+	for ((i = 0; i < num_bars; i++)); do
+		s+=$BAR_CHAR
+	done
+	for ((i = num_bars; i < length; i++)); do
+		s+=$EMPTY_CHAR
+	done
+	s+=']'
+	echo -ne "\r$s $current/$len ($perc_done%)"
+}
+
+process-files() {
+	local files=("$@")
+
+	sleep .01
+}
+
+main () {
+  shopt -s globstar nullglob
+  
+  echo 'finding files'
+  local files=(./**/*cache)
+  local len=${#files[@]}
+  echo "found $len files"
+  local i
+  for ((i = 0; i < len; i += BATCHSIZE)); do
+  	progress-bar "$((i+1))" "$len"
+  	process-files "${files[@]:i:BATCHSIZE}"
+  done
+  progress-bar "$len" "$len"
+  echo
+}
+
+main "$@"
+
+  echo
